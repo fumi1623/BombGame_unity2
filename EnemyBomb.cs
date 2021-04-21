@@ -11,33 +11,41 @@ public class EnemyBomb : MonoBehaviour
     public GameObject enemyBombBody;
     public GameObject enemyBombFire;
 
+    public GameObject target;
+    public float distance;
+
     private float fireCount;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        target = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        GameObject target = GameObject.FindGameObjectWithTag("Player");
+        distance = Vector3.Distance(transform.position, target.transform.position);
 
-        Vector3 targetPos = target.transform.position;
-        targetPos.y = transform.position.y;
-        transform.LookAt(targetPos);
-        float distance = Vector3.Distance(transform.position, target.transform.position);
 
-        if (distance < moveDistance && distance > stopDistance) {
-            transform.position = transform.position + transform.forward * moveSpeed * Time.deltaTime;
+        if (enemyBombBody.activeSelf == true) {
+            Vector3 targetPos = target.transform.position;
+            targetPos.y = transform.position.y;
+            transform.LookAt(targetPos);
+
+            if (distance < moveDistance && distance > stopDistance) {
+                transform.position = transform.position + transform.forward * moveSpeed * Time.deltaTime;
+            }
         }
+        
+
 
         if (this.gameObject == true) {
             fireCount += Time.deltaTime;
         }
 
-        if (fireCount >= 5.0f || distance <= 0.2) {
+        if (fireCount >= 5.0f || (fireCount >= 3.0f && distance <= 0.2)) {
             enemyBombFire.SetActive(true);
             enemyBombBody.SetActive(false);
         }

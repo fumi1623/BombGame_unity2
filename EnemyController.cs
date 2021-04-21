@@ -18,7 +18,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        coolTime = 0.0f;
+        coolTime = 0.0f;       
     }
 
     // Update is called once per frame
